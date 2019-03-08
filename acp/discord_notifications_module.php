@@ -1,17 +1,17 @@
 <?php
 /**
- * Discord Notifications extension for the phpBB Forum Software package.
+ * LMG Discord Notifications extension for the phpBB Forum Software package.
  *
  * @copyright (c) 2018, Tyler Olsen, https://github.com/rootslinux
  * @license GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace roots\discordnotifications\acp;
+namespace lmg\lmgnotifications\acp;
 
 /**
  * Discord Notifications ACP module.
  */
-class discord_notifications_module
+class lmg_notifications_module
 {
 	// The minimum number of characters that the user can set for the post preview setting.
 	// Note that a zero value is valid and disables previews.
@@ -23,7 +23,7 @@ class discord_notifications_module
 	const MAX_POST_PREVIEW_LENGTH = 2000;
 
 	// The name for the form used for this page
-	const PAGE_FORM_NAME = 'acp_roots_discord_notifications';
+	const PAGE_FORM_NAME = 'acp_lmg_lmg_notifications';
 
 	// Inputs on the page for enabling/disabling a forum for notifications are all named with this prefix
 	const FORUM_INPUT_PREFIX = 'dn_forum_';
@@ -52,7 +52,7 @@ class discord_notifications_module
 	/** @var \phpbb\log\log */
 	protected $log;
 
-	/** @var \roots\discordnotifications\notification_service */
+	/** @var \lmg\lmgnotifications\notification_service */
 	protected $notification_service;
 
 	/** @var \phpbb\request\request */
@@ -76,11 +76,11 @@ class discord_notifications_module
 		$this->template = $phpbb_container->get('template');
 		$this->user = $phpbb_container->get('user');
 		// Used for sending test messages to Discord
-		$this->notification_service = $phpbb_container->get('roots.discordnotifications.notification_service');
+		$this->notification_service = $phpbb_container->get('lmg.lmgnotifications.notification_service');
 
-		$this->user->add_lang_ext('roots/discordnotifications', 'acp_discord_notifications');
+		$this->user->add_lang_ext('lmg/lmgnotifications', 'acp_lmg_notifications');
 		$this->tpl_name = 'acp_discord_notifications';
-		$this->page_title = $this->user->lang('ACP_DISCORD_NOTIFICATIONS_TITLE');
+		$this->page_title = $this->user->lang('ACP_LMG_NOTIFICATIONS_TITLE');
 
 		add_form_key(self::PAGE_FORM_NAME);
 
@@ -99,25 +99,25 @@ class discord_notifications_module
 
 		// Assign template values so that the page reflects the state of the extension settings
 		$this->template->assign_vars(array(
-			'DN_MASTER_ENABLE'			=> $this->config['discord_notifications_enabled'],
-			'DN_WEBHOOK_URL'			=> $this->config['discord_notifications_webhook_url'],
-			'DN_POST_PREVIEW_LENGTH'	=> $this->config['discord_notifications_post_preview_length'],
+			'DN_MASTER_ENABLE'			=> $this->config['lmg_notifications_enabled'],
+			'DN_WEBHOOK_URL'			=> $this->config['lmg_notifications_webhook_url'],
+			'DN_POST_PREVIEW_LENGTH'	=> $this->config['lmg_notifications_post_preview_length'],
 			'DN_TEST_MESSAGE_TEXT'		=> $this->user->lang('DN_TEST_MESSAGE_TEXT'),
 
-			'DN_POST_CREATE'			=> $this->config['discord_notification_type_post_create'],
-			'DN_POST_UPDATE'			=> $this->config['discord_notification_type_post_update'],
-			'DN_POST_DELETE'			=> $this->config['discord_notification_type_post_delete'],
-			'DN_POST_LOCK'				=> $this->config['discord_notification_type_post_lock'],
-			'DN_POST_UNLOCK'			=> $this->config['discord_notification_type_post_unlock'],
+			'DN_POST_CREATE'			=> $this->config['lmg_notification_type_post_create'],
+			'DN_POST_UPDATE'			=> $this->config['lmg_notification_type_post_update'],
+			'DN_POST_DELETE'			=> $this->config['lmg_notification_type_post_delete'],
+			'DN_POST_LOCK'				=> $this->config['lmg_notification_type_post_lock'],
+			'DN_POST_UNLOCK'			=> $this->config['lmg_notification_type_post_unlock'],
 
-			'DN_TOPIC_CREATE'			=> $this->config['discord_notification_type_topic_create'],
-			'DN_TOPIC_UPDATE'			=> $this->config['discord_notification_type_topic_update'],
-			'DN_TOPIC_DELETE'			=> $this->config['discord_notification_type_topic_delete'],
-			'DN_TOPIC_LOCK'				=> $this->config['discord_notification_type_topic_lock'],
-			'DN_TOPIC_UNLOCK'			=> $this->config['discord_notification_type_topic_unlock'],
+			'DN_TOPIC_CREATE'			=> $this->config['lmg_notification_type_topic_create'],
+			'DN_TOPIC_UPDATE'			=> $this->config['lmg_notification_type_topic_update'],
+			'DN_TOPIC_DELETE'			=> $this->config['lmg_notification_type_topic_delete'],
+			'DN_TOPIC_LOCK'				=> $this->config['lmg_notification_type_topic_lock'],
+			'DN_TOPIC_UNLOCK'			=> $this->config['lmg_notification_type_topic_unlock'],
 
-			'DN_USER_CREATE'			=> $this->config['discord_notification_type_user_create'],
-			'DN_USER_DELETE'			=> $this->config['discord_notification_type_user_delete'],
+			'DN_USER_CREATE'			=> $this->config['lmg_notification_type_user_create'],
+			'DN_USER_DELETE'			=> $this->config['lmg_notification_type_user_delete'],
 
 			'U_ACTION'					=> $this->u_action,
 		));
@@ -142,7 +142,7 @@ class discord_notifications_module
 			trigger_error($this->user->lang('DN_TEST_BAD_WEBHOOK') . adm_back_link($this->u_action), E_USER_WARNING);
 		}
 
-		$result = $this->notification_service->force_send_discord_notification($webhook_url, $test_message);
+		$result = $this->notification_service->force_send_lmg_notification($webhook_url, $test_message);
 		if ($result == true)
 		{
 			trigger_error($this->user->lang('DN_TEST_SUCCESS') . adm_back_link($this->u_action));
@@ -189,26 +189,26 @@ class discord_notifications_module
 			trigger_error($this->user->lang('DN_POST_PREVIEW_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 		}
 
-		$this->config->set('discord_notifications_enabled', $master_enable);
-		$this->config->set('discord_notifications_webhook_url', $webhook_url);
-		$this->config->set('discord_notifications_post_preview_length', $preview_length);
+		$this->config->set('lmg_notifications_enabled', $master_enable);
+		$this->config->set('lmg_notifications_webhook_url', $webhook_url);
+		$this->config->set('lmg_notifications_post_preview_length', $preview_length);
 
-		$this->config->set('discord_notification_type_post_create', $this->request->variable('dn_post_create', 0));
-		$this->config->set('discord_notification_type_post_update', $this->request->variable('dn_post_update', 0));
-		$this->config->set('discord_notification_type_post_delete', $this->request->variable('dn_post_delete', 0));
-		$this->config->set('discord_notification_type_post_lock', $this->request->variable('dn_post_lock', 0));
-		$this->config->set('discord_notification_type_post_unlock', $this->request->variable('dn_post_unlock', 0));
+		$this->config->set('lmg_notification_type_post_create', $this->request->variable('dn_post_create', 0));
+		$this->config->set('lmg_notification_type_post_update', $this->request->variable('dn_post_update', 0));
+		$this->config->set('lmg_notification_type_post_delete', $this->request->variable('dn_post_delete', 0));
+		$this->config->set('lmg_notification_type_post_lock', $this->request->variable('dn_post_lock', 0));
+		$this->config->set('lmg_notification_type_post_unlock', $this->request->variable('dn_post_unlock', 0));
 
-		$this->config->set('discord_notification_type_topic_create', $this->request->variable('dn_topic_create', 0));
-		$this->config->set('discord_notification_type_topic_update', $this->request->variable('dn_topic_update', 0));
-		$this->config->set('discord_notification_type_topic_delete', $this->request->variable('dn_topic_delete', 0));
-		$this->config->set('discord_notification_type_topic_lock', $this->request->variable('dn_topic_lock', 0));
-		$this->config->set('discord_notification_type_topic_unlock', $this->request->variable('dn_topic_unlock', 0));
+		$this->config->set('lmg_notification_type_topic_create', $this->request->variable('dn_topic_create', 0));
+		$this->config->set('lmg_notification_type_topic_update', $this->request->variable('dn_topic_update', 0));
+		$this->config->set('lmg_notification_type_topic_delete', $this->request->variable('dn_topic_delete', 0));
+		$this->config->set('lmg_notification_type_topic_lock', $this->request->variable('dn_topic_lock', 0));
+		$this->config->set('lmg_notification_type_topic_unlock', $this->request->variable('dn_topic_unlock', 0));
 
-		$this->config->set('discord_notification_type_user_create', $this->request->variable('dn_user_create', 0));
-		$this->config->set('discord_notification_type_user_delete', $this->request->variable('dn_user_delete', 0));
+		$this->config->set('lmg_notification_type_user_create', $this->request->variable('dn_user_create', 0));
+		$this->config->set('lmg_notification_type_user_delete', $this->request->variable('dn_user_delete', 0));
 
-		// Set the discord_notifications_enabled in the forum table.
+		// Set the lmg_notifications_enabled in the forum table.
 		$forum_id_names = array(); // This array will be built up to contain {forum_id} => {input_name}
 
 		// First grab all variables in the submit request and match each against a regex to find the ones that are tied to a forum enabled setting.
@@ -227,15 +227,15 @@ class discord_notifications_module
 		foreach ($forum_id_names as $id => $input_name)
 		{
 			$enabled = (int)$this->request->variable($input_name, 0);
-			$sql = "UPDATE " . FORUMS_TABLE . " SET discord_notifications_enabled = $enabled WHERE forum_id = $id";
+			$sql = "UPDATE " . FORUMS_TABLE . " SET lmg_notifications_enabled = $enabled WHERE forum_id = $id";
 			$this->db->sql_query($sql);
 			// TODO: It would be better to do this update in a single operation instead of once for each input inside this loop
 		}
 
 		// Log the settings change
-		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_DISCORD_NOTIFICATIONS_LOG_UPDATE');
+		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_LMG_NOTIFICATIONS_LOG_UPDATE');
 		// Destroy any cached discord notification data
-		$this->cache->destroy('roots_discord_notifications');
+		$this->cache->destroy('lmg_lmg_notifications');
 
 		trigger_error($this->user->lang('DN_SETTINGS_SAVED') . adm_back_link($this->u_action));
 	}
@@ -246,7 +246,7 @@ class discord_notifications_module
 	 */
 	private function generate_forum_section()
 	{
-		$sql = "SELECT forum_id, forum_type, forum_name, discord_notifications_enabled FROM " . FORUMS_TABLE . " ORDER BY left_id ASC";
+		$sql = "SELECT forum_id, forum_type, forum_name, lmg_notifications_enabled FROM " . FORUMS_TABLE . " ORDER BY left_id ASC";
 		$result = $this->db->sql_query($sql);
 
 		while ($row = $this->db->sql_fetchrow($result))
@@ -268,7 +268,7 @@ class discord_notifications_module
 							'S_IS_CAT'			=> false,
 							'FORUM_NAME'		=> $row['forum_name'],
 							'FORUM_ID'			=> self::FORUM_INPUT_PREFIX . $row['forum_id'],
-							'FORUM_DN_ENABLED'	=> $row['discord_notifications_enabled'],
+							'FORUM_DN_ENABLED'	=> $row['lmg_notifications_enabled'],
 						);
 				$this->template->assign_block_vars('forumrow', $tpl_row);
 			}
