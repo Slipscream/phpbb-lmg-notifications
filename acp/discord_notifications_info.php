@@ -6,23 +6,23 @@
  * @license GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace roots\discordnotifications\acp;
+namespace lmg\lmgnotifications\acp;
 
 /**
  * Discord Notifications ACP module info.
  */
-class discord_notifications_info
+class lmg_lmgnotifications_info
 {
 	public function module()
 	{
 		return array(
-			'filename'	=> '\roots\discordnotifications\acp\discord_notifications_module',
-			'title'		=> 'ACP_DISCORD_NOTIFICATIONS',
+			'filename'	=> '\lmg\lmgnotifications\acp\lmg_notifications_module',
+			'title'		=> 'ACP_LMG_NOTIFICATIONS',
 			'modes'		=> array(
 				'settings'	=> array(
-					'title'	=> 'ACP_DISCORD_NOTIFICATIONS_TITLE',
-					'auth'	=> 'ext_roots/discordnotifications && acl_a_board',
-					'cat'	=> array('ACP_DISCORD_NOTIFICATIONS')
+					'title'	=> 'ACP_LMG_NOTIFICATIONS_TITLE',
+					'auth'	=> 'ext_lmg/lmgnotifications && acl_a_board',
+					'cat'	=> array('ACP_LMG_NOTIFICATIONS')
 				),
 			),
 		);
