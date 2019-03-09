@@ -6,7 +6,7 @@
  * @license GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace roots\discordnotifications\event;
+namespace lmg/lmgnotifications\event;
 
 /**
  * @ignore
@@ -47,13 +47,13 @@ class notification_event_listener implements EventSubscriberInterface
 	 * @param \roots\discordnotifications\notification_service $notification_service
 	 * @access public
 	 */
-	public function __construct(\phpbb\language\language $language, \roots\discordnotifications\notification_service $notification_service)
+	public function __construct(\phpbb\language\language $language, \lmg\lmgnotifications\notification_service $notification_service)
 	{
 		$this->language = $language;
 		$this->notification_service = $notification_service;
 
 		// Add notifications text from the langauge file
-		$this->language->add_lang('discord_notification_messages', 'roots/discordnotifications');
+		$this->language->add_lang('lmg_notification_messages', 'lmg/lmgnotifications');
 	}
 
 	/**
@@ -405,7 +405,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_post_created($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_post_create';
+		$notification_type_config_name = 'lmg_notification_type_post_create';
 		$color = self::COLOR_BRIGHT_GREEN;
 		$emoji = self::EMOJI_CREATE;
 
@@ -436,7 +436,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_post_updated($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_post_update';
+		$notification_type_config_name = 'lmg_notification_type_post_update';
 		$color = self::COLOR_BRIGHT_BLUE;
 		$emoji = self::EMOJI_UPDATE;
 
@@ -474,7 +474,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$footer = $this->generate_footer_text($this->language->lang('REASON'), $data['edit_reason']);
 		}
 
-		$this->notification_service->send_discord_notification($color, $message, $footer);
+		$this->notification_service->send_lmg_notification($color, $message, $footer);
 	}
 
 	/**
@@ -484,7 +484,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_post_deleted($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_post_delete';
+		$notification_type_config_name = 'lmg_notification_type_post_delete';
 		$color = self::COLOR_BRIGHT_RED;
 		$emoji = self::EMOJI_DELETE;
 
@@ -512,7 +512,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$footer = $this->generate_footer_text($this->language->lang('REASON'), $data['delete_reason']);
 		}
 
-		$this->notification_service->send_discord_notification($color, $message, $footer);
+		$this->notification_service->send_lmg_notification($color, $message, $footer);
 	}
 
 	/**
@@ -522,7 +522,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_post_locked($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_post_lock';
+		$notification_type_config_name = 'lmg_notification_type_post_lock';
 		$color = self::COLOR_BRIGHT_ORANGE;
 		$emoji = self::EMOJI_LOCK;
 
@@ -540,7 +540,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$emoji, $post_link, $user_link, $topic_link, $forum_link
 		);
 
-		$this->notification_service->send_discord_notification($color, $message);
+		$this->notification_service->send_lmg_notification($color, $message);
 	}
 
 	/**
@@ -550,7 +550,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_post_unlocked($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_post_unlock';
+		$notification_type_config_name = 'lmg_notification_type_post_unlock';
 		$color = self::COLOR_BRIGHT_ORANGE;
 		$emoji = self::EMOJI_UNLOCK;
 
@@ -568,7 +568,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$emoji, $post_link, $user_link, $topic_link, $forum_link
 		);
 
-		$this->notification_service->send_discord_notification($color, $message);
+		$this->notification_service->send_lmg_notification($color, $message);
 	}
 
 	/**
@@ -578,7 +578,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_topic_created($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_topic_create';
+		$notification_type_config_name = 'lmg_notification_type_topic_create';
 		$color = self::COLOR_BRIGHT_GREEN;
 		$emoji = self::EMOJI_CREATE;
 
@@ -598,7 +598,7 @@ class notification_event_listener implements EventSubscriberInterface
 		// Generates a topic preview if necessary
 		$footer = $this->generate_footer_text($this->language->lang('PREVIEW'), $data['content']);
 
-		$this->notification_service->send_discord_notification($color, $message, $footer);
+		$this->notification_service->send_lmg_notification($color, $message, $footer);
 	}
 
 	/**
@@ -608,7 +608,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_topic_updated($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_topic_update';
+		$notification_type_config_name = 'lmg_notification_type_topic_update';
 		$color = self::COLOR_BRIGHT_BLUE;
 		$emoji = self::EMOJI_UPDATE;
 
@@ -645,7 +645,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$footer = $this->generate_footer_text($this->language->lang('REASON'), $data['edit_reason']);
 		}
 
-		$this->notification_service->send_discord_notification($color, $message, $footer);
+		$this->notification_service->send_lmg_notification($color, $message, $footer);
 	}
 
 	/**
@@ -655,7 +655,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_topic_deleted($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_topic_delete';
+		$notification_type_config_name = 'lmg_notification_type_topic_delete';
 		$color = self::COLOR_BRIGHT_RED;
 		$emoji = self::EMOJI_DELETE;
 
@@ -671,7 +671,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$emoji, $user_link, $data['topic_title'], $data['topic_post_count'], $forum_link
 		);
 
-		$this->notification_service->send_discord_notification($color, $message);
+		$this->notification_service->send_lmg_notification($color, $message);
 	}
 
 	/**
@@ -681,7 +681,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_topic_locked($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_topic_lock';
+		$notification_type_config_name = 'lmg_notification_type_topic_lock';
 		$color = self::COLOR_BRIGHT_ORANGE;
 		$emoji = self::EMOJI_LOCK;
 
@@ -698,7 +698,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$emoji, $topic_link, $forum_link, $user_link
 		);
 
-		$this->notification_service->send_discord_notification($color, $message);
+		$this->notification_service->send_lmg_notification($color, $message);
 	}
 
 	/**
@@ -708,7 +708,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_topic_unlocked($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_topic_unlock';
+		$notification_type_config_name = 'lmg_notification_type_topic_unlock';
 		$color = self::COLOR_BRIGHT_ORANGE;
 		$emoji = self::EMOJI_UNLOCK;
 
@@ -725,7 +725,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$emoji, $topic_link, $forum_link, $user_link
 		);
 
-		$this->notification_service->send_discord_notification($color, $message);
+		$this->notification_service->send_lmg_notification($color, $message);
 	}
 
 	/**
@@ -737,7 +737,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_user_created($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_user_create';
+		$notification_type_config_name = 'lmg_notification_type_user_create';
 		$color = self::COLOR_BRIGHT_PURPLE;
 		$emoji = self::EMOJI_USER;
 
@@ -752,7 +752,7 @@ class notification_event_listener implements EventSubscriberInterface
 			$emoji, $user_link
 		);
 
-		$this->notification_service->send_discord_notification($color, $message);
+		$this->notification_service->send_lmg_notification($color, $message);
 	}
 
 	/**
@@ -764,7 +764,7 @@ class notification_event_listener implements EventSubscriberInterface
 	private function notify_users_deleted($data)
 	{
 		// Constant properties for this notification type
-		$notification_type_config_name = 'discord_notification_type_user_delete';
+		$notification_type_config_name = 'lmg_notification_type_user_delete';
 		$color = self::COLOR_BRIGHT_PURPLE;
 		$emoji = self::EMOJI_USER;
 
@@ -815,7 +815,7 @@ class notification_event_listener implements EventSubscriberInterface
 			);
 		}
 
-		$this->notification_service->send_discord_notification($color, $message);
+		$this->notification_service->send_lmg_notification($color, $message);
 	}
 
 	// ----------------------------------------------------------------------------
