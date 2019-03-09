@@ -6,7 +6,7 @@
  * @license GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace roots\discordnotifications;
+namespace lmg\lmgnotifications;
 
 /**
  * Contains the core logic for formatting and sending notification message to Discord.
@@ -51,7 +51,7 @@ class notification_service
 	public function is_notification_type_enabled($notification_type)
 	{
 		// Also check the global extension enabled setting. We don't generate any notifications if this is disabled
-		if ($this->config['discord_notifications_enabled'] == 1 && $this->config[$notification_type] == 1)
+		if ($this->config['lmg_notifications_enabled'] == 1 && $this->config[$notification_type] == 1)
 		{
 			return true;
 		}
@@ -71,16 +71,16 @@ class notification_service
 			return false;
 		}
 
-		if ($this->config['discord_notifications_enabled'] == 0)
+		if ($this->config['lmg_notifications_enabled'] == 0)
 		{
 			return false;
 		}
 
 		// Query the forum table where forum notification settings are stored
-		$sql = "SELECT discord_notifications_enabled FROM " . FORUMS_TABLE . " WHERE forum_id = $forum_id";
+		$sql = "SELECT lmg_notifications_enabled FROM " . FORUMS_TABLE . " WHERE forum_id = $forum_id";
 		$result = $this->db->sql_query($sql);
 		$data = $this->db->sql_fetchrow($result);
-		$enabled = $data['discord_notifications_enabled'] == 1 ? true : false;
+		$enabled = $data['lmg_notifications_enabled'] == 1 ? true : false;
 		$this->db->sql_freeresult($result);
 
 		return $enabled;
@@ -92,7 +92,7 @@ class notification_service
 	 */
 	public function get_post_preview_length()
 	{
-		return $this->config['discord_notifications_post_preview_length'];
+		return $this->config['lmg_notifications_post_preview_length'];
 	}
 
 	/**
@@ -213,13 +213,13 @@ class notification_service
 	 */
 	public function send_discord_notification($color, $message, $footer = NULL)
 	{
-		if ($this->config['discord_notifications_enabled'] == 0 || isset($message) == false)
+		if ($this->config['lmg_notifications_enabled'] == 0 || isset($message) == false)
 		{
 			return;
 		}
 
 		// Note that the value stored in the config table will always be a valid URL when discord_notifications_enabled is set
-		$discord_webhook_url = $this->config['discord_notifications_webhook_url'];
+		$discord_webhook_url = $this->config['lmg_notifications_webhook_url'];
 
 		$this->execute_discord_webhook($discord_webhook_url, $color, $message, $footer);
 	}
@@ -231,7 +231,7 @@ class notification_service
 	 * @param $message The message text to send. Must be a non-empty string.
 	 * @return Boolean indicating whether the message transmission resulted in success or failure.
 	 */
-	public function force_send_discord_notification($discord_webhook_url, $message)
+	public function force_send_lmg_notification($discord_webhook_url, $message)
 	{
 		if (!filter_var($discord_webhook_url, FILTER_VALIDATE_URL) || is_string($message) == false || $message == '')
 		{
