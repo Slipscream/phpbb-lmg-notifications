@@ -1,2 +1,2 @@
 parameters:
-    lmg.lmgnotifications.tables.notifications: '%core.table_prefix%notifications'
+    lmg.lmgnotifications.tables.notifications: '%core.table_prefix%lmgnotifications'

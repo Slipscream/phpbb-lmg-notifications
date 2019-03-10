@@ -6,7 +6,7 @@
  * @license GNU General Public License, version 2 (GPL-2.0)
  */
 
-namespace lmg/lmgnotifications\event;
+namespace lmg\lmgnotifications\event;
 
 /**
  * @ignore
@@ -38,13 +38,13 @@ class notification_event_listener implements EventSubscriberInterface
 	/** @var \phpbb\language\language */
 	protected $language;
 
-	/** @var \roots\discordnotifications\notification_service */
+	/** @var \lmg\lmgnotifications\notification_service */
 	protected $notification_service;
 
 	/**
 	 * Constructor
 	 * @param \phpbb\language\language $language
-	 * @param \roots\discordnotifications\notification_service $notification_service
+	 * @param \lmg\lmgnotifications\notification_service $notification_service
 	 * @access public
 	 */
 	public function __construct(\phpbb\language\language $language, \lmg\lmgnotifications\notification_service $notification_service)
@@ -151,11 +151,11 @@ class notification_event_listener implements EventSubscriberInterface
 		{
 			$this->notify_topic_created($post_data);
 		}
-		elseif ($event['mode'] == 'reply' || $event['mode'] == 'quote') // New post
+		elseif ($event['mode'] == 'reply') // New post
 		{
 			$this->notify_post_created($post_data);
 		}
-		elseif ($event['mode'] == 'edit' || $event['mode'] == 'edit_topic' || $event['mode'] == 'edit_first_post' || $event['mode'] == 'edit_last_post') // Edit existing post
+		elseif ($event['mode'] == 'edit') // Edit existing post
 		{
 			// If the post that was edited is the first one in the topic, we consider this a topic update event.
 			if ($event['data']['post_id'] == $event['data']['topic_first_post_id'])
@@ -426,7 +426,7 @@ class notification_event_listener implements EventSubscriberInterface
 		// Generate a post preview if necessary
 		$footer = $this->generate_footer_text($this->language->lang('PREVIEW'), $data['content']);
 
-		$this->notification_service->send_discord_notification($color, $message, $footer);
+		$this->notification_service->send_lmg_notification($color, $message, $footer);
 	}
 
 	/**
@@ -886,7 +886,7 @@ class notification_event_listener implements EventSubscriberInterface
 	 */
 	private function generate_post_link($topic_id, $post_id, $text)
 	{
-		$url = generate_board_url() . '/viewtopic.php?t=' . $topic_id . '&p=' . $post_id . '#p' . $post_id;
+		$url = generate_board_url() . '/viewtopic.php?t=' . $topic_id . '#p' . $post_id;
 		$url = $this->reformat_link_url($url);
 		$text = $this->reformat_link_text($text);
 		return sprintf('[%s](%s)', $text, $url);

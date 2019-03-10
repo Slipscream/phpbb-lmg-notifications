@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Discord Notifications Build Script" description="Builds an extension.zip from a git repository" default="all">
-	<property name="vendor-name" value="roots" />
-	<property name="extension-name" value="discordnotifications" />
+	<property name="vendor-name" value="lmg" />
+	<property name="extension-name" value="lmgnotifications" />
 	<!--
 	Only set this to "true" if you have dependencies in the composer.json,
 	otherwise use "false".

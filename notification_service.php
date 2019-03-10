@@ -218,7 +218,7 @@ class notification_service
 			return;
 		}
 
-		// Note that the value stored in the config table will always be a valid URL when discord_notifications_enabled is set
+		// Note that the value stored in the config table will always be a valid URL when lmg_notifications_enabled is set
 		$discord_webhook_url = $this->config['lmg_notifications_webhook_url'];
 
 		$this->execute_discord_webhook($discord_webhook_url, $color, $message, $footer);
@@ -231,7 +231,7 @@ class notification_service
 	 * @param $message The message text to send. Must be a non-empty string.
 	 * @return Boolean indicating whether the message transmission resulted in success or failure.
 	 */
-	public function force_send_lmg_notification($discord_webhook_url, $message)
+	public function force_send_discord_notification($discord_webhook_url, $message)
 	{
 		if (!filter_var($discord_webhook_url, FILTER_VALIDATE_URL) || is_string($message) == false || $message == '')
 		{

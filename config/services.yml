@@ -2,13 +2,13 @@ imports:
     - { resource: parameters.yml }
 
 services:
-    lmg.lmgnotifications.notification_service:
+    roots.discordnotifications.notification_service:
         class: lmg\lmgnotifications\notification_service
         arguments:
             - '@config'
             - '@dbal.conn'
 
-    lmg.lmgnotifications.listener:
+    roots.discordnotifications.listener:
         class: lmg\lmgnotifications\event\notification_event_listener
         arguments:
             - '@language'
